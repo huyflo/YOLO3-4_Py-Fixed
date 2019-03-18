@@ -78,8 +78,13 @@ include_paths = [np.get_include(), os.path.join(darknet_dir,"include"), os.path.
 libraries = ["darknet","m", "pthread"]
 library_paths = [".", "./__libdarknet"]
 
-extra_compiler_flags = [ get_cflags("python3")]
-extra_linker_flags = [get_libs("python3")]
+extra_compiler_flags = []
+extra_linker_flags = []
+if get_cflags("python3") != '':
+    extra_compiler_flags.append(get_cflags("python3"))
+
+if get_cflags("python3") != '':
+    extra_linker_flags.append(get_libs("python3"))
 
 cython_compile_directives = {}
 macros = []
@@ -130,7 +135,6 @@ else:
 
     # NOTE: It is assumed that pydarknet.cpp is already generated using pydarknet.py. It is also assumed that USE_CV
     # flag is unchanged between cythonize and current compilation.
-
 ext_modules=[
     pydarknet_extension
 ]
